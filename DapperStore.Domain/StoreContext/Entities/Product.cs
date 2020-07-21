@@ -8,7 +8,7 @@ namespace DapperStore.Domain.StoreContext.Entities
             string description, 
             string image, 
             decimal price,
-            string quantityOnHand)
+            int quantityOnHand)
         {
             this.Title = title;
             this.Description = description;
@@ -20,7 +20,7 @@ namespace DapperStore.Domain.StoreContext.Entities
         public string Description { get; private set; }
         public string Image { get; private set; }
         public decimal Price { get; private set; }
-        public string QuantityOnHand { get; set; }
+        public int QuantityOnHand { get; set; }
 
         public override string ToString()
         {
