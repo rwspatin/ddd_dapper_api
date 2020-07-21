@@ -1,9 +1,10 @@
+using DapperStore.Shared.Commands;
 using FluentValidator;
 using FluentValidator.Validation;
 
 namespace DapperStore.Domain.StoreContext.Commands.CustomerCommands.Inputs
 {
-    public class CreateCustomerCommand : Notifiable
+    public class CreateCustomerCommand : Notifiable, ICommand
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
