@@ -2,9 +2,11 @@ using System;
 using System.Collections.Generic;
 using DapperStore.Domain.StoreContext.Enums;
 using System.Linq;
+using FluentValidator;
+
 namespace DapperStore.Domain.StoreContext.Entities
 {
-    public class Order
+    public class Order : Notifiable
     {
         private readonly IList<OrderItem> _items;
         private readonly IList<Delivery> _deliverys;
@@ -25,8 +27,12 @@ namespace DapperStore.Domain.StoreContext.Entities
         public IReadOnlyCollection<OrderItem> Items => _items.ToArray();
         public IReadOnlyCollection<Delivery> Deliverys => _deliverys.ToArray();
 
-        public void AddItem(OrderItem item)
+        public void AddItem(Product product, int quantity)
         {
+            if(quantity > product.QuantityOnHand)
+                AddNotification("OrderItem", $"Produto {product.Title} não tem {quantity} em estoque");
+
+            var item = new OrderItem(product, quantity);
             _items.Add(item);
         }
 
@@ -34,14 +40,14 @@ namespace DapperStore.Domain.StoreContext.Entities
         public void Place() 
         {
             this.Number = Guid.NewGuid().ToString().Replace("-", "").Substring(0,8).ToUpper();
+            if(_items.Count == 0)
+                AddNotification("Order", "Este pedido não possui itens");
         }
 
         //Pay order
         public void Pay()
         {
             Status = EOrderStatus.Paid;
-
-            
         }
         //send order
         public void Ship()
