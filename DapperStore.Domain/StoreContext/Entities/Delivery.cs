@@ -1,21 +1,20 @@
 using System;
+using DapperStore.Domain.StoreContext.Enums;
 
 namespace DapperStore.Domain.StoreContext.Entities
 {
     public class Delivery
     {
         public Delivery(
-            DateTime createDate, 
-            DateTime estimatedDeliveryDate, 
-            string status)
+            DateTime estimatedDeliveryDate)
         {
-            this.CreateDate = createDate;
+            this.CreateDate = DateTime.Now;
             this.EstimatedDeliveryDate = estimatedDeliveryDate;
-            this.Status = status;
+            this.Status = EDeliveryStatus.Waiting;
 
         }
         public DateTime CreateDate { get; private set; }
         public DateTime EstimatedDeliveryDate { get; private set; }
-        public string Status { get; private set; }
+        public EDeliveryStatus Status { get; private set; }
     }
 }
