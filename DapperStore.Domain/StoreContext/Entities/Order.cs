@@ -13,7 +13,6 @@ namespace DapperStore.Domain.StoreContext.Entities
             )
         {
             this.Customer = customer;
-            this.Number = Guid.NewGuid().ToString().Replace("-", "").Substring(0,8).ToUpper();
             this.CreatedDate = DateTime.Now;
             this.Status = EOrderStatus.Created;
             this._items = new List<OrderItem>();
@@ -31,12 +30,47 @@ namespace DapperStore.Domain.StoreContext.Entities
             _items.Add(item);
         }
 
-        public void AddItem(Delivery delivery)
+        //To place an order
+        public void Place() 
         {
-            _deliverys.Add(delivery);
+            this.Number = Guid.NewGuid().ToString().Replace("-", "").Substring(0,8).ToUpper();
         }
 
-        //To place an order
-        public void Place() { }
+        //Pay order
+        public void Pay()
+        {
+            Status = EOrderStatus.Paid;
+
+            
+        }
+        //send order
+        public void Ship()
+        {
+            //For each 5 products this will be send
+            var deliveries = new List<Delivery>();
+            deliveries.Add(new Delivery(DateTime.Now.AddDays(5)));
+
+            int count = 1;
+            foreach(var item in _items)
+            {
+                if(count == 5)
+                {
+                    count = 1;
+                    deliveries.Add(new Delivery(DateTime.Now.AddDays(5)));
+                }
+
+                count++;
+            }
+
+            deliveries.ForEach(x => x.Ship());
+            
+            deliveries.ForEach(x => _deliverys.Add(x));
+        }
+
+        //cancel order
+        public void Cancel(){
+            Status = EOrderStatus.Canceled;
+            _deliverys.ToList().ForEach(x => x.Cancel());
+        }
     }
 }
