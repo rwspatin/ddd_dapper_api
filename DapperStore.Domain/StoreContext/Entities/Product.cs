@@ -1,6 +1,8 @@
+using FluentValidator;
+
 namespace DapperStore.Domain.StoreContext.Entities
 {
-    public class Product
+    public class Product : Notifiable
     {
 
         public Product(
@@ -25,6 +27,11 @@ namespace DapperStore.Domain.StoreContext.Entities
         public override string ToString()
         {
             return this.Title;
+        }
+
+        public void DecreseQuantity(int qtd)
+        {
+            QuantityOnHand = qtd;
         }
     }
 }

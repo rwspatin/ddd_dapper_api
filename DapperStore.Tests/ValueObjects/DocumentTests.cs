@@ -10,7 +10,7 @@ namespace DapperStore.Tests.ValueObjects
         private Document invalidDocument;
         public DocumentTests(){
             invalidDocument = new Document("121313131");
-            validDocument = new Document("121313131");
+            validDocument = new Document("411.845.935-31");
         }
         [TestMethod]
         public void ShouldReturnNotificationWhenDocumentIsNotValid()

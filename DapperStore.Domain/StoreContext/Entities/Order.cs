@@ -54,7 +54,6 @@ namespace DapperStore.Domain.StoreContext.Entities
         {
             //For each 5 products this will be send
             var deliveries = new List<Delivery>();
-            deliveries.Add(new Delivery(DateTime.Now.AddDays(5)));
 
             int count = 1;
             foreach(var item in _items)
