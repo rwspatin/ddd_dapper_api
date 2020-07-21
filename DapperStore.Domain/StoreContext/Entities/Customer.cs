@@ -1,10 +1,11 @@
 using System.Collections.Generic;
 using DapperStore.Domain.StoreContext.ValueObjects;
-
+using System.Linq;
 namespace DapperStore.Domain.StoreContext.Entities
 {
     public class Customer
     {
+        private readonly IList<Address> _addresses;
         public Customer(
             Name name, 
             Document document, 
@@ -15,14 +16,19 @@ namespace DapperStore.Domain.StoreContext.Entities
             this.Document = document;
             this.Email = email;
             this.Phone = phone;
-            this.Address = new List<Address>();
+            this._addresses = new List<Address>();
         }
 
         public Name Name { get; private set; }
         public Document Document { get; private set; }
         public Email Email { get; private set; }
         public string Phone { get; private set; }
-        public IReadOnlyCollection<Address> Address { get; private set; }
+        public IReadOnlyCollection<Address> Address => _addresses.ToArray();
+
+        public void AddAddress(Address address)
+        {
+            _addresses.Add(address);
+        }
 
         public override string ToString()
         {
