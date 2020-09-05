@@ -1,8 +1,9 @@
 using DapperStore.Domain.StoreContext.Enums;
+using DapperStore.Shared.Entities;
 
 namespace DapperStore.Domain.StoreContext.Entities
 {
-    public class Address
+    public class Address : Entity
     {
         public Address(
             string street, 

@@ -2,10 +2,11 @@ using System.Collections.Generic;
 using DapperStore.Domain.StoreContext.ValueObjects;
 using System.Linq;
 using FluentValidator;
+using DapperStore.Shared.Entities;
 
 namespace DapperStore.Domain.StoreContext.Entities
 {
-    public class Customer : Notifiable
+    public class Customer : Entity
     {
         private readonly IList<Address> _addresses;
         public Customer(
